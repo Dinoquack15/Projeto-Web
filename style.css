@@ -1,0 +1,38 @@
+body{
+    margin: 0%;
+    padding: 0%;
+}
+header {
+    background-color: blueviolet;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;  
+    padding: 0 10px;         
+}
+.buttonHeader{
+margin: 5px;
+border-radius: 5px;
+width: 12ch;
+height: 4ch;
+cursor: pointer;
+}
+button:hover{
+    opacity: 80%;
+}
+#Conteudo{
+    padding: 4ch;
+    display: flex;
+    background-color: #a18bdd;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+#saibamais{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1;
+    
+}

@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <header>
-        <a href="Index.htm"><button class="buttonHeader">Home</button></a>
-        <a href=""><button class="buttonHeader">Pessoal</button></a>
-        <a href=""><button class="buttonHeader">Academico</button></a>
-    </header>
     <div id="Conteudo">
-        <h1>Oi, Eu sou o Eduardo 👋👋</h1>
-        <a href="" id="saibamais"><button>Saiba Mais</button></a>
+        <header>
+            <button class="buttonHeader" onclick="window.location.href = 'Index.htm'">Home</button>
+            <button class="buttonHeader" onclick="window.location.href = 'pessoal.htm'">Pessoal</button>
+            <button class="buttonHeader" onclick="window.location.href = 'academico.htm'">Academico</button>
+            
+        </header>
+
+        <div id="Card">
+            <h1>Oi, Eu sou o Eduardo 👋👋</h1>
+            
+        </div>
+        <button onclick="window.location.href = 'index.htm'" id="buttonSaibaMais">Saiba Mais</button>
     </div>
 </body>
 </html>

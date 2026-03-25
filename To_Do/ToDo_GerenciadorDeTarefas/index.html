@@ -1,1 +1,33 @@
-
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gerenciador de Tarefas</title>
+    </head>
+    <body>
+        <script>
+            function adicionarTarefa() {
+             var vNovaTarefa = document.getElementById("tarefaInput").value;
+                
+                if (vNovaTarefa.trim() !== "") { //Trim Limpa os espaços vazios
+                    var vlista = document.getElementById("listaTarefas").innerHTML; 
+                    vlista = vlista + "<li>" + vNovaTarefa + "</li>";
+                    document.getElementById("listaTarefas").innerHTML = vlista;
+                    
+                    document.getElementById("tarefaInput").value = ""; // Limpa o input depois de adicionar
+                } else {
+                    alert("Digite uma tarefa!"); // Caixa de mensagem tratando a falta de texto
+                }
+            }
+        </script>
+        <div id="container">
+            <input type="text" id="tarefaInput" placeholder="Digite uma tarefa..." value="">
+            <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
+        </div>
+        <div id="containerListaTarefas">
+            <ul id="listaTarefas">
+            </ul>
+        </div>
+    </body>
+</html>

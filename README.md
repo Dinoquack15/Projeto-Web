@@ -1,2 +1,2 @@
 # Projeto-Web
-Desenvolvimento de um site pessoa, que mostra um pouco sobre mim e sobre meus anos na Etec Professora Ilza Nascimento Pintus
+Este repositório será utilizado ao longo do ano durante a materia de Programação web 3

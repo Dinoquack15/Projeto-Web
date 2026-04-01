@@ -7,27 +7,131 @@
     </head>
     <body>
         <script>
-            function adicionarTarefa() {
-             var vNovaTarefa = document.getElementById("tarefaInput").value;
-                
-                if (vNovaTarefa.trim() !== "") { //Trim Limpa os espaços vazios
-                    var vlista = document.getElementById("listaTarefas").innerHTML; 
-                    vlista = vlista + "<li>" + vNovaTarefa + "</li>";
-                    document.getElementById("listaTarefas").innerHTML = vlista;
-                    
-                    document.getElementById("tarefaInput").value = ""; // Limpa o input depois de adicionar
-                } else {
-                    alert("Digite uma tarefa!"); // Caixa de mensagem tratando a falta de texto
+            let contadorId = 0;
+            let totalTarefas = 0;
+
+            function atualizarContador() {
+                document.getElementById("contadorTarefas").textContent = totalTarefas;
+            }
+
+            function concluirTarefa(idTarefa) {
+                var tarefa = document.getElementById(idTarefa);
+                if (tarefa) {
+                    // Alterna entre concluído e não concluído
+                    if (tarefa.style.textDecoration === "line-through") {
+                        tarefa.style.textDecoration = "none";
+                        tarefa.style.color = "black";
+                    } else {
+                        tarefa.style.textDecoration = "line-through";
+                        tarefa.style.color = "gray";
+                    }
                 }
             }
+
+            function removerTarefa(idTarefa) {
+                var tarefa = document.getElementById(idTarefa);
+                if (tarefa) {
+                    tarefa.remove(); // Remove o item da lista
+                    totalTarefas--; // Diminui o contador
+                    atualizarContador(); // Atualiza o contador na tela
+                }
+            }
+
+            function adicionarTarefa() {
+                var vNovaTarefa = document.getElementById("tarefaInput").value;
+                var vDataTarefa = document.getElementById("dataInput").value;
+                
+                // Validaçoes
+                if (vNovaTarefa.trim() === "") { // Texto vazio
+                    alert("Digite uma tarefa!");
+                    return;
+                }
+                
+                if (vNovaTarefa.trim().length < 3) {
+                    alert("A tarefa deve ter no mínimo 3 caracteres!");
+                    return;
+                }
+                
+                // Incrementa contador
+                contadorId++;
+                totalTarefas++;
+                var idTarefa = `tarefa_${contadorId}`;
+                
+                // Criação do item
+                var li = document.createElement("li");
+                li.id = idTarefa;
+                
+                // Texto da tarefa e data
+                var spanTexto = document.createElement("span");
+                var textoCompleto = vNovaTarefa.trim();
+                
+                // Adiciona a data se foi preenchida
+                if (vDataTarefa && vDataTarefa !== "") {
+                    var partes = vDataTarefa.split("-");
+                    var dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                    textoCompleto += ` / Data: ${dataFormatada}`;
+                }
+                
+                spanTexto.textContent = textoCompleto;
+                li.appendChild(spanTexto);
+                
+                // Criação do botão de concluir
+                var btnConcluir = document.createElement("button");
+                btnConcluir.textContent = "Concluir";
+                btnConcluir.style.marginLeft = "10px";
+                btnConcluir.style.marginRight = "5px";
+                btnConcluir.onclick = function() {
+                    concluirTarefa(idTarefa);
+                };
+                
+                // Criação botão de remover
+                var btnRemover = document.createElement("button");
+                btnRemover.textContent = "Remover";
+                btnRemover.onclick = function() {
+                    removerTarefa(idTarefa);
+                };
+                
+                // Adiciona os botoes
+                li.appendChild(btnConcluir);
+                li.appendChild(btnRemover);
+                
+                // Adiciona o item na lista
+                document.getElementById("listaTarefas").appendChild(li);
+                
+                // Limpa os campos
+                document.getElementById("tarefaInput").value = "";
+                document.getElementById("dataInput").value = "";
+                
+                atualizarContador();
+
+                document.getElementById("tarefaInput").focus();
+            }
+
         </script>
-        <div id="container">
-            <input type="text" id="tarefaInput" placeholder="Digite uma tarefa..." value="">
+        <h1>📋 Gerenciador de Tarefas</h1>
+    <div>
+        <strong>Total de tarefas:</strong> <span id="contadorTarefas">0</span>
+    </div>
+    <hr>
+    <div>
+        <h3>Adicionar nova tarefa</h3>
+        <div>
+            <label for="tarefaInput">Descrição da tarefa (mínimo 3 caracteres):</label><br>
+            <input type="text" id="tarefaInput" placeholder="Insira uma tarefa" style="width: 300px;">
+        </div>
+        <div style="margin-top: 8px;">
+            <label for="dataInput">Data:</label><br>
+            <input type="date" id="dataInput">
+        </div>
+        <div style="margin-top: 12px;">
             <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
         </div>
-        <div id="containerListaTarefas">
-            <ul id="listaTarefas">
-            </ul>
-        </div>
+    </div>
+    <hr>
+    <div>
+        <h3>Minhas tarefas</h3>
+        <ul id="listaTarefas">
+        </ul>
+    </div>
     </body>
 </html>

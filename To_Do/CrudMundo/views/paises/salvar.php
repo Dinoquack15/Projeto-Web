@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/conexao.php';
+require_once '../../config/auth.php';
 
 $id = $_GET['id'] ?? null;
 $pais = ['nome'=>'', 'id_continente'=>'', 'id_governante'=>'', 'populacao'=>'', 'area_km2'=>'', 'idioma'=>'', 'clima'=>'', 'regime_politico'=>'', 'moeda'=>''];

@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/conexao.php';
+require_once '../../config/auth.php';
 
 $sql = "SELECT p.*, c.nome AS continente_nome, g.nome AS governante_nome 
         FROM paises p 
@@ -25,6 +26,7 @@ $paises = $stmt->fetchAll();
             <a href="../governantes/index.php">Governantes</a>
             <a href="index.php">Países</a>
             <a href="../cidades/index.php">Cidades</a>
+                    <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="../login/logout.php">Sair</a></span>
         </nav>
     </header>
 

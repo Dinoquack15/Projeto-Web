@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/conexao.php';
+require_once '../../config/auth.php';
 
 $sql = "SELECT cid.*, p.nome AS pais_nome, g.nome AS governante_nome 
         FROM cidades cid 
@@ -24,6 +25,7 @@ $cidades = $pdo->query($sql)->fetchAll();
             <a href="../governantes/index.php">Governantes</a>
             <a href="../paises/index.php">Países</a>
             <a href="index.php">Cidades</a>
+                    <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="../login/logout.php">Sair</a></span>
         </nav>
     </header>
 

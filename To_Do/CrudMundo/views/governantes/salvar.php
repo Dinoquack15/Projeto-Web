@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/conexao.php';
+require_once '../../config/auth.php';
 
 $id = $_GET['id'] ?? null;
 $gov = ['nome'=>'', 'partido_politico'=>'', 'data_nascimento'=>'', 'idade'=>'', 'data_inicio_mandato'=>'', 'data_fim_mandato'=>''];

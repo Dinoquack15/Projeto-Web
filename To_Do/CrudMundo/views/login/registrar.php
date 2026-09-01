@@ -22,8 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $erro = 'Já existe uma conta com esse e-mail.';
         } else {
+            // primeiro_acesso = 1 força a troca de senha no primeiro login,
+            // mesmo para quem acabou de se cadastrar (regra da atividade)
             $hash = password_hash($senha, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
+            $stmt = $pdo->prepare(
+                "INSERT INTO usuarios (nome, email, senha, primeiro_acesso) VALUES (?, ?, ?, 1)"
+            );
             $stmt->execute([$nome, $email, $hash]);
 
             header('Location: index.php?registrado=1');

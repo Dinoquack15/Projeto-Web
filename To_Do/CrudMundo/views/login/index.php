@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/conexao.php';
+require_once '../../config/log.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -14,6 +15,8 @@ if (!empty($_SESSION['usuario_id'])) {
 $erro = '';
 $sucesso = $_GET['registrado'] ?? '';
 
+const LIMITE_TENTATIVAS = 3;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $senha = $_POST['senha'] ?? '';
@@ -25,13 +28,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$email]);
         $usuario = $stmt->fetch();
 
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
+        if (!$usuario) {
+            // E-mail não cadastrado. Não informamos se o e-mail existe ou não,
+            // por segurança, mas registramos a tentativa.
+            registrarLog($pdo, null, $email, 'LOGIN_FALHA');
+            $erro = 'E-mail ou senha inválidos.';
+
+        } elseif ((int) $usuario['bloqueado'] === 1) {
+            registrarLog($pdo, $usuario['id'], $email, 'TENTATIVA_BLOQUEADO');
+            $erro = 'Sua conta foi bloqueada após 3 tentativas de senha incorreta. Procure um administrador para desbloqueá-la.';
+
+        } elseif (password_verify($senha, $usuario['senha'])) {
+            // Login correto: zera o contador de tentativas
+            $stmt = $pdo->prepare("UPDATE usuarios SET tentativas_falhas = 0 WHERE id = ?");
+            $stmt->execute([$usuario['id']]);
+            registrarLog($pdo, $usuario['id'], $email, 'LOGIN_SUCESSO');
+
+            if ((int) $usuario['primeiro_acesso'] === 1) {
+                // Ainda não pode acessar o sistema: precisa trocar a senha antes
+                $_SESSION['troca_senha_usuario_id'] = $usuario['id'];
+                header('Location: trocar-senha.php');
+                exit;
+            }
+
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
             header('Location: ../../index.php');
             exit;
+
         } else {
-            $erro = 'E-mail ou senha inválidos.';
+            // Senha incorreta: incrementa o contador de tentativas consecutivas
+            $tentativas = (int) $usuario['tentativas_falhas'] + 1;
+
+            if ($tentativas >= LIMITE_TENTATIVAS) {
+                $stmt = $pdo->prepare("UPDATE usuarios SET tentativas_falhas = ?, bloqueado = 1 WHERE id = ?");
+                $stmt->execute([$tentativas, $usuario['id']]);
+                registrarLog($pdo, $usuario['id'], $email, 'CONTA_BLOQUEADA');
+                $erro = 'Senha incorreta. Sua conta foi bloqueada após 3 tentativas consecutivas.';
+            } else {
+                $stmt = $pdo->prepare("UPDATE usuarios SET tentativas_falhas = ? WHERE id = ?");
+                $stmt->execute([$tentativas, $usuario['id']]);
+                registrarLog($pdo, $usuario['id'], $email, 'LOGIN_FALHA');
+                $restantes = LIMITE_TENTATIVAS - $tentativas;
+                $erro = "Senha incorreta. Você tem mais {$restantes} tentativa(s) antes do bloqueio da conta.";
+            }
         }
     }
 }

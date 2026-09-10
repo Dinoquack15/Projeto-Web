@@ -39,7 +39,7 @@ $rotulosAcao = [
             <a href="../cidades/index.php">Cidades</a>
             <a href="../usuarios/index.php">Usuários</a>
             <a href="index.php">Logs</a>
-            <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="../login/logout.php">Sair</a></span>
+            <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="../usuarios/senha.php">Minha Senha</a> | <a href="../login/logout.php">Sair</a></span>
         </nav>
     </header>
 

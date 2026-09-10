@@ -25,7 +25,7 @@ $cidadeMaisPopulosa = $pdo->query("SELECT nome, populacao FROM cidades ORDER BY 
             <a href="views/cidades/index.php">Cidades</a>
             <a href="views/usuarios/index.php">Usuários</a>
             <a href="views/logs/index.php">Logs</a>
-                    <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="views/login/logout.php">Sair</a></span>
+                    <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="views/usuarios/senha.php">Minha Senha</a> | <a href="views/login/logout.php">Sair</a></span>
         </nav>
     </header>
 

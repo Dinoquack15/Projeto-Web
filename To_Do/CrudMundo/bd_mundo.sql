@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS bd_mundo;
 USE bd_mundo;
 
--- Tabela de usuários do sistema (autenticação)
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
@@ -13,7 +12,6 @@ CREATE TABLE usuarios (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de logs de autenticação (histórico de acessos e eventos de segurança)
 CREATE TABLE logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NULL,

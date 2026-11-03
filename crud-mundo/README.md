@@ -8,6 +8,7 @@ Sistema web para gerenciamento de dados geográficos: continentes, países, cida
 
 - Cadastro, listagem, edição e exclusão de continentes, países, cidades e governantes
 - Painel inicial com total de países, total de cidades e cidade mais populosa
+- Mapa com a localização da unidade (Google Maps) e mapa de países com dados da API REST Countries (Google Maps)
 - Pesquisa dinâmica nas tabelas e confirmação antes de excluir registros
 - Cadastro de usuários e login com senha criptografada (`password_hash`)
 - Bloqueio da conta após 3 tentativas consecutivas de senha incorreta

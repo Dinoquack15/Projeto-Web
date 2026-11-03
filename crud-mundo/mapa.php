@@ -41,6 +41,7 @@ $longitude = -45.8841;
             <a href="views/usuarios/index.php">Usuários</a>
             <a href="views/logs/index.php">Logs</a>
             <a href="mapa.php">Mapa</a>
+            <a href="mapa-paises.php">Mapa de Países</a>
                     <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="views/usuarios/senha.php">Minha Senha</a> | <a href="views/login/logout.php">Sair</a></span>
         </nav>
     </header>

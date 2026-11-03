@@ -91,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php">Usuários</a>
             <a href="../logs/index.php">Logs</a>
             <a href="../../mapa.php">Mapa</a>
+            <a href="../../mapa-paises.php">Mapa de Países</a>
             <span style="color:#ecf0f1; margin-left:15px;">👤 <?= htmlspecialchars($_SESSION['usuario_nome']) ?> | <a href="senha.php">Minha Senha</a> | <a href="../login/logout.php">Sair</a></span>
         </nav>
     </header>
